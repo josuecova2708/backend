@@ -1,0 +1,45 @@
+BEGIN;
+
+-- Tabla: categorias
+INSERT INTO categorias (id, nombre, descripcion) VALUES (1, 'Computers', 'Electronics products and accessories');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (2, 'Electronics', 'Automotive products and accessories');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (3, 'Automotive', 'Movies products and accessories');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (4, 'Electronics', NULL);
+INSERT INTO categorias (id, nombre, descripcion) VALUES (5, 'Automotive', 'Health products and accessories');
+
+-- Tabla: usuarios
+INSERT INTO usuarios (id, nombre_completo, email, fecha_registro, activo) VALUES (1, 'Kenneth Hahn', 'Crystal_Fadel28@yahoo.com', '2025-11-29', FALSE);
+INSERT INTO usuarios (id, nombre_completo, email, fecha_registro, activo) VALUES (2, 'Ms. Pinkie Stiedemann', 'Winona69@gmail.com', '2026-01-22', FALSE);
+INSERT INTO usuarios (id, nombre_completo, email, fecha_registro, activo) VALUES (3, 'Norma Hilll', 'Titus_Purdy1@hotmail.com', '2025-06-27', TRUE);
+INSERT INTO usuarios (id, nombre_completo, email, fecha_registro, activo) VALUES (4, 'Mr. Carissa Bayer', 'Velda17@yahoo.com', '2025-09-17', TRUE);
+INSERT INTO usuarios (id, nombre_completo, email, fecha_registro, activo) VALUES (5, 'Dustin Little', 'Bryant.Hauck20@hotmail.com', '2025-07-02', TRUE);
+
+-- Tabla: productos
+INSERT INTO productos (id, categoria_id, nombre, precio) VALUES (1, 3, 'Ergonomic Silk Soap', '914.29');
+INSERT INTO productos (id, categoria_id, nombre, precio) VALUES (2, 2, 'Handcrafted Bamboo Shoes', '104.69');
+INSERT INTO productos (id, categoria_id, nombre, precio) VALUES (3, 1, 'Ergonomic Aluminum Shoes', '164.89');
+INSERT INTO productos (id, categoria_id, nombre, precio) VALUES (4, 4, 'Electronic Silk Soap', '488.15');
+INSERT INTO productos (id, categoria_id, nombre, precio) VALUES (5, 3, 'Frozen Silk Pizza', '290.99');
+
+-- Tabla: pedidos
+INSERT INTO pedidos (id, usuario_id, fecha_pedido, total) VALUES (1, 1, '2025-12-31', '4451.75');
+INSERT INTO pedidos (id, usuario_id, fecha_pedido, total) VALUES (2, 4, '2025-11-26', '2645.59');
+INSERT INTO pedidos (id, usuario_id, fecha_pedido, total) VALUES (3, 4, '2025-08-28', '3444.89');
+INSERT INTO pedidos (id, usuario_id, fecha_pedido, total) VALUES (4, 3, '2026-02-02', '834.19');
+INSERT INTO pedidos (id, usuario_id, fecha_pedido, total) VALUES (5, 5, '2025-06-08', '3305.65');
+
+-- Tabla: detalle_pedidos
+INSERT INTO detalle_pedidos (id, pedido_id, producto_id, cantidad) VALUES (1, 5, 3, 8);
+INSERT INTO detalle_pedidos (id, pedido_id, producto_id, cantidad) VALUES (2, 1, 3, 8);
+INSERT INTO detalle_pedidos (id, pedido_id, producto_id, cantidad) VALUES (3, 4, 4, 7);
+INSERT INTO detalle_pedidos (id, pedido_id, producto_id, cantidad) VALUES (4, 2, 4, 13);
+INSERT INTO detalle_pedidos (id, pedido_id, producto_id, cantidad) VALUES (5, 1, 5, 12);
+
+-- Resincronizar secuencias
+SELECT setval(pg_get_serial_sequence('categorias', 'id'), (SELECT MAX(id) FROM categorias));
+SELECT setval(pg_get_serial_sequence('usuarios', 'id'), (SELECT MAX(id) FROM usuarios));
+SELECT setval(pg_get_serial_sequence('productos', 'id'), (SELECT MAX(id) FROM productos));
+SELECT setval(pg_get_serial_sequence('pedidos', 'id'), (SELECT MAX(id) FROM pedidos));
+SELECT setval(pg_get_serial_sequence('detalle_pedidos', 'id'), (SELECT MAX(id) FROM detalle_pedidos));
+
+COMMIT;
